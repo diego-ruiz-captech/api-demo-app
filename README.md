@@ -1,6 +1,6 @@
 # S3 API demo
 
-This is a simple AWS S3 app that can upload and download objects to a single bucket.
+This is a simple Springboot app that can upload and download AWS S3 objects to a single bucket.
 
 To run you'll need to provide:
 
