@@ -1,14 +1,13 @@
-package com.example.demo.services;
+package com.example.s3demo.services;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -19,7 +18,8 @@ public class S3Repository {
 
     private final AmazonS3Client s3Client;
 
-    String bucket = "druiz-api-test-bucket";
+    @Value("${app.bucket_name}")
+    private String bucket;
 
     public S3Repository(AmazonS3Client s3Client) {
         this.s3Client = s3Client;
@@ -39,9 +39,6 @@ public class S3Repository {
         Date date = new Date(new Date().getTime() + seconds * 1000);
         GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucket, key);
         generatePresignedUrlRequest.setExpiration(date);
-//        ResponseHeaderOverrides responseHeaderOverrides = new ResponseHeaderOverrides();
-//        responseHeaderOverrides.setContentDisposition("attachment; filename=" + key);
-//        generatePresignedUrlRequest.setResponseHeaders(responseHeaderOverrides);
         return s3Client.generatePresignedUrl(generatePresignedUrlRequest);
     }
 }

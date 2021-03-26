@@ -1,8 +1,7 @@
-package com.example.demo.controllers;
+package com.example.s3demo.controllers;
 
-import com.example.demo.services.S3Repository;
+import com.example.s3demo.services.S3Repository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.net.URL;
 
 @RestController
 @RequestMapping("/")
-class HelloController {
+class S3Controller {
 
     @Autowired
     S3Repository s3Repository;
@@ -44,7 +43,7 @@ class HelloController {
             httpHeaders.setLocation(presignedUrl.toURI());
             return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
         } catch (Exception e ){
-            return new ResponseEntity<>("Error getting file", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error downloading file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
