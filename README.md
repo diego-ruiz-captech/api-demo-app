@@ -13,4 +13,4 @@ Sample run command
 mvnw spring-boot:run "-Dspring-boot.run.arguments=--app.bucket_name=BUCKETNAME --cloud.aws.credentials.accessKey=AWS_ACCESS_KEY --cloud.aws.credentials.secretKey=AWS_SECRET_KEY"
 ```
 
-A dockerfile is added for container-based deployments. This can also be built using AWS codebuild and can be referenced in `buildspec.yml`
+A dockerfile is added for container-based deployments. This can also be built+deployed using AWS codebuild/codedeploy/ecs and can be referenced in the `buildspec.yml`, `appspec.yml`, and the `taskdef.json` file.
