@@ -39,8 +39,8 @@
       }
     ],
     "requiresCompatibilities": [
-      "EC2"
+      "FARGATE"
     ],
-    "networkMode": null,
+    "networkMode": "awsvpc",
     "family": "<APP_NAME>"
   }
