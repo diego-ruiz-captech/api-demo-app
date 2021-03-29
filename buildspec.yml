@@ -29,6 +29,9 @@ phases:
       - sed -i 's/<AWS_ACCOUNT_ID>/'$AWS_ACCOUNT_ID'/g' taskdef.json
       - sed -i 's/<MEMORY_RESV>/'$MEMORY_RESV'/g' taskdef.json
       - sed -i 's/<IMAGE_NAME>/'$AWS_ACCOUNT_ID'\.dkr\.ecr\.'$AWS_DEFAULT_REGION'\.amazonaws.com\/'$IMAGE_REPO_NAME'\:'$IMAGE_TAG'/g' taskdef.json
+      - sed -i 's/<APP_BUCKET_NAME>/'$APP_BUCKET_NAME/g' taskdef.json
+      - sed -i 's/<AWS_ACCESS_KEY_ID_ARN>/'$AWS_ACCESS_KEY_ID_ARN/g' taskdef.json
+      - sed -i 's/<AWS_SECRET_ACCESS_KEY_ARN>/'$AWS_SECRET_ACCESS_KEY_ARN/g' taskdef.json
 artifacts:
   files:
     - target/demo-0.0.1-SNAPSHOT.jar
