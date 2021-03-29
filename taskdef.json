@@ -23,17 +23,17 @@
             "value": "<APP_NAME>"
           },
           {
-            "Name": "APP_BUCKET_NAME",
-            "Value": "<APP_BUCKET_NAME>"
+            "name": "APP_BUCKET_NAME",
+            "value": "<APP_BUCKET_NAME>"
           }
         ],
         "secrets": [
           {
-            "Name": "AWS_ACCESS_KEY_ID",
-            "ValueFrom": "<AWS_ACCESS_KEY_ID_ARN>"
+            "name": "AWS_ACCESS_KEY_ID",
+            "valueFrom": "<AWS_ACCESS_KEY_ID_ARN>"
           }, {
-            "Name": "AWS_SECRET_ACCESS_KEY",
-            "ValueFrom": "<AWS_SECRET_ACCESS_KEY_ARN>"
+            "name": "AWS_SECRET_ACCESS_KEY",
+            "valueFrom": "<AWS_SECRET_ACCESS_KEY_ARN>"
           }
         ]
       }
