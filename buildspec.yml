@@ -26,3 +26,5 @@ phases:
 artifacts:
   files:
     - target/demo-0.0.1-SNAPSHOT.jar
+    - appspec.yml
+    - taskdef.json

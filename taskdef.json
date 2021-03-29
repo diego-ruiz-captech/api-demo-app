@@ -1,0 +1,46 @@
+{
+    "executionRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/<APP_NAME>_ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "name": "<APP_NAME>",
+        "image": "<IMAGE_NAME>",
+        "essential": true,
+        "memoryReservation": <MEMORY_RESV>,
+        "portMappings": [
+          {
+            "hostPort": 0,
+            "protocol": "tcp",
+            "containerPort": <SERVICE_PORT>
+          }
+        ],
+        "environment": [
+          {
+            "name": "PORT",
+            "value": "<SERVICE_PORT>"
+          },
+          {
+            "name": "APP_NAME",
+            "value": "<APP_NAME>"
+          },
+          {
+            "Name": "APP_BUCKET_NAME",
+            "Value": "<APP_BUCKET_NAME>"
+          }
+        ],
+        "secrets": [
+          {
+            "Name": "AWS_ACCESS_KEY_ID",
+            "ValueFrom": "<AWS_ACCESS_KEY_ID_ARN>"
+          }, {
+            "Name": "AWS_SECRET_ACCESS_KEY",
+            "ValueFrom": "<AWS_SECRET_ACCESS_KEY_ARN>"
+          }
+        ]
+      }
+    ],
+    "requiresCompatibilities": [
+      "EC2"
+    ],
+    "networkMode": null,
+    "family": "<APP_NAME>"
+  }
