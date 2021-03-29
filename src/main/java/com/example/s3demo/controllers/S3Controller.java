@@ -21,7 +21,7 @@ class S3Controller {
     @GetMapping
     public ResponseEntity<?> hello() {
 
-        return new ResponseEntity<>("demo api - blue", HttpStatus.OK);
+        return new ResponseEntity<>("demo api - green", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/upload/", method = RequestMethod.POST)
