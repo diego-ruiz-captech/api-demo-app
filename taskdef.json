@@ -1,5 +1,6 @@
 {
     "executionRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/<APP_NAME>_ecsTaskExecutionRole",
+    "cpu": 512,
     "containerDefinitions": [
       {
         "name": "<APP_NAME>",
