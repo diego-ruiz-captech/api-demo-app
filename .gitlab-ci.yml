@@ -20,7 +20,7 @@ build:
 test:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test
+    - mvn $MAVEN_CLI_OPTS test -Dcloud.aws.credentials.accessKey=a -D cloud.aws.credentials.secretKey=a -Dapp.bucket_name=a
 
 test-job2:
   stage: test
