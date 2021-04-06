@@ -15,7 +15,7 @@ cache:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn $MAVEN_CLI_OPTS package -DskipTests
 
 test:
   stage: test
@@ -33,6 +33,6 @@ test-job2:
 deploy:
   stage: deploy
   script:
-    - mvn $MAVEN_CLI_OPTS deploy
+    - echo "Deployment to AWS ECS would happen here"
   only:
     - master
