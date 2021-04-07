@@ -5,6 +5,7 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode"
   #MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  
 
 cache:
   paths:
@@ -30,7 +31,34 @@ test-job2:
     - echo "which simulates a test that runs 20 seconds longer than test-job1"
     - sleep 20
 
+docker_build:
+  #image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-ecs:latest
+  #image: docker:19.03.12
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  stage: deploy
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  before_script:
+    #- echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS -p $(aws ecr get-login-password --region $AWS_DEFAULT_REGION) $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $IMAGE_TAG --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $IMAGE_TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
+    - sed -i 's/<APP_NAME>/'$IMAGE_REPO_NAME'/g' appspec.yml taskdef.json
+    - sed -i 's/<SERVICE_PORT>/'$SERVICE_PORT'/g' appspec.yml taskdef.json
+    - sed -i 's/<AWS_ACCOUNT_ID>/'$AWS_ACCOUNT_ID'/g' taskdef.json
+    - sed -i 's/<MEMORY_RESV>/'$MEMORY_RESV'/g' taskdef.json
+    - sed -i 's/<IMAGE_NAME>/'$AWS_ACCOUNT_ID'\.dkr\.ecr\.'$AWS_DEFAULT_REGION'\.amazonaws.com\/'$IMAGE_REPO_NAME'\:'$IMAGE_TAG'/g' taskdef.json
+    - sed -i 's/<APP_BUCKET_NAME>/'$APP_BUCKET_NAME'/g' taskdef.json
+    # arns have slashes, sed command needs to be adjusted
+    - sed -i 's|<AWS_ACCESS_KEY_ID_ARN>|'$AWS_ACCESS_KEY_ID_ARN'|g' taskdef.json
+    - sed -i 's|<AWS_SECRET_ACCESS_KEY_ARN>|'$AWS_SECRET_ACCESS_KEY_ARN'|g' taskdef.json
+  rules:
+    - if: $CI_COMMIT_TAG
 deploy:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-ecs:latest
   stage: deploy
   script:
     - echo "Deployment to AWS ECS would happen here"
